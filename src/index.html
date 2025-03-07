@@ -6,15 +6,35 @@
     <title>Your Day💜</title>
     <link href="../style/output.css" rel="stylesheet" />
 </head>
+    <style>
+        .emoji {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: fall 3s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 1;
+                transform: translateY(-50px) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(600px) rotate(360deg);
+            }
+        }
+
+    </style>
 <body class="bg-[#111315] ">
     <div class="flex flex-col items-center justify-center">
-        <div class="mt-32">
-            <h1 class="text-white">
-                card da musica
+        <div class="mt-32 mb-2 animate-pulse">
+            <h1 class="text-white text-center font-semibold text-2xl">
+                Feliz dia das mulheres! 💜
             </h1>
         </div>
 
-        <div class="w-96">
+        <div class="w-96" id="emoji-container">
             <img
                 src="image/ela.jpeg"
                 alt="ela"
@@ -23,13 +43,13 @@
         </div>
 
         <div class="mt-4">
-            <h3 class="text-white text-center font-semibold text-2xl">
-                Feliz dia das mulheres! 💜
-            </h3>
-
-            <p id="idade" class="text-white text-center font-normal text-xl">
+            <h3 id="idade" class="text-white text-center font-normal text-xl">
                 Calculando...
-            </p>
+            </h3>
+        </div>
+
+        <div class="mt-32 text-slate-400">
+            <span>by: gab <3</span>
         </div>
     </div>
 
@@ -63,8 +83,33 @@
         }
 
         setInterval(atualizarIdade, 1000);
-        atualizarIdade(); // Execução inicial imediata
-    </script>
+        atualizarIdade();
 
+        function criarEmoji() {
+            const container = document.getElementById("emoji-container");
+
+            const emoji = document.createElement("div");
+            emoji.classList.add("emoji");
+            emoji.textContent = "💜";
+
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+
+            const posX = Math.random() * containerWidth;
+            emoji.style.left = posX + "px";
+            emoji.style.top = "-50px";
+
+            const tamanho = Math.random() * 1.5 + 0.5;
+            emoji.style.fontSize = `${tamanho}rem`;
+
+            container.appendChild(emoji);
+
+            emoji.addEventListener("animationend", () => {
+                emoji.remove();
+            });
+        }
+
+        setInterval(criarEmoji, 600);
+    </script>
 </body>
 </html>
