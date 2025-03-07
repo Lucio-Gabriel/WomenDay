@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Day💜</title>
+    <link href="../style/output.css" rel="stylesheet" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💜</text></svg>">
+</head>
+<style>
+    .emoji {
+        position: absolute;
+        font-size: 1.5rem;
+        animation: fall 3s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes fall {
+        0% {
+            opacity: 1;
+            transform: translateY(-50px) rotate(0deg);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(600px) rotate(360deg);
+        }
+    }
+
+</style>
+<body class="bg-[#111315]">
+    <div class="flex flex-col items-center justify-center">
+        <div class="mt-32 mb-2 animate-pulse">
+            <h1 class="text-white text-center font-semibold text-2xl">
+                Feliz dia das mulheres! 💜
+            </h1>
+        </div>
+
+        <div class="w-96" id="emoji-container">
+            <img
+                    src="image/ela.jpeg"
+                    alt="ela"
+                    class="rounded-xl shadow-2xl"
+            >
+        </div>
+
+        <div class="mt-4">
+            <h3 id="idade" class="text-white text-center font-normal text-xl">
+                Calculando...
+            </h3>
+        </div>
+
+        <div class="mt-32 text-slate-400">
+            <span>by: gab <3</span>
+        </div>
+    </div>
+
+<script>
+    function atualizarIdade() {
+        const dataNascimento = new Date(2005, 7, 3); // Mês 7 = agosto
+        const agora = new Date();
+
+        let anos = agora.getFullYear() - dataNascimento.getFullYear();
+
+        const aniversarioEsteAno = new Date(agora.getFullYear(), dataNascimento.getMonth(), dataNascimento.getDate());
+        if (agora < aniversarioEsteAno) {
+            anos--;
+        }
+
+        const ultimoAniversario = agora >= aniversarioEsteAno
+            ? aniversarioEsteAno
+            : new Date(agora.getFullYear() - 1, dataNascimento.getMonth(), dataNascimento.getDate()); // Foi no ano anterior
+
+        const diferencaDesdeUltimoAniversario = agora - ultimoAniversario;
+
+        const dias = Math.floor(diferencaDesdeUltimoAniversario / (1000 * 60 * 60 * 24));
+        const horas = agora.getHours();
+        const minutos = agora.getMinutes();
+        const segundos = agora.getSeconds();
+
+        const meses = agora.getMonth() - dataNascimento.getMonth() + (agora.getMonth() < dataNascimento.getMonth() ? 12 : 0);
+
+        const texto = `${anos} anos, ${meses % 12} meses, ${dias % 30} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+        document.getElementById("idade").textContent = texto;
+    }
+
+    setInterval(atualizarIdade, 1000);
+    atualizarIdade();
+
+    function criarEmoji() {
+        const container = document.getElementById("emoji-container");
+
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji");
+        emoji.textContent = "💜";
+
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+
+        const posX = Math.random() * containerWidth;
+        emoji.style.left = posX + "px";
+        emoji.style.top = "-50px";
+
+        const tamanho = Math.random() * 1.5 + 0.5;
+        emoji.style.fontSize = `${tamanho}rem`;
+
+        container.appendChild(emoji);
+
+        emoji.addEventListener("animationend", () => {
+            emoji.remove();
+        });
+    }
+
+    setInterval(criarEmoji, 600);
+</script>
+</body>
+</html>
