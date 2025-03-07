@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Day💜</title>
+    <link href="../style/output.css" rel="stylesheet" />
+</head>
+<body class="bg-[#111315] ">
+    <div class="flex flex-col items-center justify-center">
+        <div class="mt-32">
+            <h1 class="text-white">
+                card da musica
+            </h1>
+        </div>
+
+        <div class="w-96">
+            <img
+                src="image/ela.jpeg"
+                alt="ela"
+                class="rounded-xl shadow-2xl"
+            >
+        </div>
+
+        <div class="mt-4">
+            <h3 class="text-white text-center font-semibold text-2xl">
+                Feliz dia das mulheres! 💜
+            </h3>
+
+            <p id="idade" class="text-white text-center font-normal text-xl">
+                Calculando...
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function atualizarIdade() {
+            const dataNascimento = new Date(2005, 7, 3); // Mês 7 = agosto
+            const agora = new Date();
+
+            let anos = agora.getFullYear() - dataNascimento.getFullYear();
+
+            const aniversarioEsteAno = new Date(agora.getFullYear(), dataNascimento.getMonth(), dataNascimento.getDate());
+            if (agora < aniversarioEsteAno) {
+                anos--;
+            }
+
+            const ultimoAniversario = agora >= aniversarioEsteAno
+                ? aniversarioEsteAno
+                : new Date(agora.getFullYear() - 1, dataNascimento.getMonth(), dataNascimento.getDate()); // Foi no ano anterior
+
+            const diferencaDesdeUltimoAniversario = agora - ultimoAniversario;
+
+            const dias = Math.floor(diferencaDesdeUltimoAniversario / (1000 * 60 * 60 * 24));
+            const horas = agora.getHours();
+            const minutos = agora.getMinutes();
+            const segundos = agora.getSeconds();
+
+            const meses = agora.getMonth() - dataNascimento.getMonth() + (agora.getMonth() < dataNascimento.getMonth() ? 12 : 0);
+
+            const texto = `${anos} anos, ${meses % 12} meses, ${dias % 30} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+            document.getElementById("idade").textContent = texto;
+        }
+
+        setInterval(atualizarIdade, 1000);
+        atualizarIdade(); // Execução inicial imediata
+    </script>
+
+</body>
+</html>
